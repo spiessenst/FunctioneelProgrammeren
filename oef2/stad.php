@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Mijn eerste webpagina</title>
+    <title>Detail Stad</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -40,10 +40,11 @@ $steden= GetData("SELECT * FROM images where img_id = ".$_GET["stad"] , $conn);
             print "<h3> ". ucfirst($stad['img_title']) ."</h3>";
             print "<p>".$stad['img_width'] ." x ". $stad['img_height'] . " pixels" ."</p>";
             print "<p>Filename: ".  $stad['img_filename']  ."</p>";
-            print "<img src=./images/". $stad['img_filename']." display=block width=100% height=auto>";
+            print "<img src=./images/". $stad['img_filename']." display=block width=100% height=auto >";
             print "<a href=steden.php>Terug naar overzicht</a>";
             print "</div>";
         }
+        $conn->close();
         ?>
     </div>
 </div>

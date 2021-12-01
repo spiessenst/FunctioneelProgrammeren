@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Mijn eerste webpagina</title>
+    <title>Leuke plekken in Europa</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -17,9 +17,11 @@
 
 <?php
 
-require_once "config.php";
-require_once "conn.php";
+require_once "config.php"; //$servername = "localhost"; $username = "root"; $password = "root"; $dbname = "steden";
+require_once "conn.php"; // Database connectie
 require_once "functions.php";
+
+// GetData in functions.php
 
 $steden= GetData("SELECT * FROM images" , $conn);
 
@@ -44,6 +46,7 @@ $steden= GetData("SELECT * FROM images" , $conn);
             print "<a href=stad.php?stad=".$stad['img_id'].">Meer info</a>";
             print "</div>";
         }
+        $conn->close();
         ?>
     </div>
 </div>
