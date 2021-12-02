@@ -17,18 +17,16 @@
 
 <?php
 
-require_once "config.php";
-require_once "conn.php";
+
+
 require_once "functions.php";
 
 
 if ( $_GET["stad"] > "" ) {
-    $steden = GetData("SELECT * FROM images where img_id = " . $_GET["stad"], $conn);
+    $steden = GetData("SELECT * FROM images where img_id = " . $_GET["stad"]);
 }
 else{
     header("Location: steden.php");
-
-
 }
 ?>
 
@@ -51,7 +49,7 @@ else{
             print "<a href=steden.php>Terug naar overzicht</a>";
             print "</div>";
         }
-        $conn->close();
+
         ?>
     </div>
 </div>

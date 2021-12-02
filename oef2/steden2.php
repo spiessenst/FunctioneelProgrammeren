@@ -17,11 +17,10 @@
 
 <?php
 
-require_once "config.php";
-require_once "conn.php";
+
 require_once "functions.php";
 
-$steden= GetData("SELECT * FROM images" , $conn);
+$steden= GetData("SELECT * FROM images" );
 
 ?>
 

@@ -17,13 +17,12 @@
 
 <?php
 
-require_once "config.php"; //$servername = "localhost"; $username = "root"; $password = "root"; $dbname = "steden";
-require_once "conn.php"; // Database connectie
+
 require_once "functions.php";
 
 // GetData in functions.php
 
-$steden= GetData("SELECT * FROM images" , $conn);
+$steden= GetData("SELECT * FROM images");
 
 ?>
 
@@ -46,7 +45,7 @@ $steden= GetData("SELECT * FROM images" , $conn);
             print "<a href=stad.php?stad=".$stad['img_id'].">Meer info</a>";
             print "</div>";
         }
-        $conn->close();
+
         ?>
     </div>
 </div>
