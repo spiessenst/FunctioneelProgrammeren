@@ -21,8 +21,15 @@ require_once "config.php";
 require_once "conn.php";
 require_once "functions.php";
 
-$steden= GetData("SELECT * FROM images where img_id = ".$_GET["stad"] , $conn);
 
+if ( $_GET["stad"] > "" ) {
+    $steden = GetData("SELECT * FROM images where img_id = " . $_GET["stad"], $conn);
+}
+else{
+    header("Location: steden.php");
+
+
+}
 ?>
 
 <div class="jumbotron text-center">
