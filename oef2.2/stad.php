@@ -8,7 +8,8 @@ print PrintHead("Detail Stad");
 $steden= GetData("SELECT * FROM images");
 
 
-if ( $_GET["stad"] > "" ) {
+if (  is_numeric($_GET["stad"] )) {
+
     $steden = GetData("SELECT * FROM images where img_id = " . $_GET["stad"]);
 }
 else{
@@ -25,7 +26,7 @@ print PrintJumbo("Detail Stad" , "");
 
         <?php
 
-        foreach ($steden as $row =>$stad){
+        foreach ($steden as $stad){
             print "<div class='col-sm-10'>";
             print "<h3> ". ucfirst($stad['img_title']) ."</h3>";
             print "<p>".$stad['img_width'] ." x ". $stad['img_height'] . " pixels" ."</p>";
