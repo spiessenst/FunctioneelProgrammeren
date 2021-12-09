@@ -27,3 +27,11 @@ function PrintBody(){
     return "<body>";
 
 }
+
+function PrintBodyEnd(){
+
+    return "</body>
+</html>
+";
+
+}

@@ -3,7 +3,6 @@
 require_once "functions.php";
 require_once "html_components.php";
 
-print PrintHead("Detail Stad");
 
 $steden= GetData("SELECT * FROM images");
 
@@ -15,8 +14,10 @@ if (  is_numeric($_GET["stad"] )) {
 else{
     header("Location: steden.php");
 }
-print PrintBody();
 
+
+print PrintHead("Detail Stad");
+print PrintBody();
 print PrintJumbo("Detail Stad" , "");
 ?>
 
@@ -39,8 +40,9 @@ print PrintJumbo("Detail Stad" , "");
         ?>
     </div>
 </div>
-</body>
-</html>
+<?php
+print PrintBodyEnd();
+?>
 
 
 

@@ -3,10 +3,9 @@
 require_once "functions.php";
 require_once "html_components.php";
 
-print PrintHead("Leuke plekken in Europa");
-
 $steden= GetData("SELECT * FROM images");
 
+print PrintHead("Leuke plekken in Europa");
 print PrintBody();
 print PrintJumbo("Leuke plekken in Europa" , "Tips voor citytrips voor vrolijke vakantiegangers!");
 
@@ -32,7 +31,6 @@ print PrintJumbo("Leuke plekken in Europa" , "Tips voor citytrips voor vrolijke 
         ?>
     </div>
 </div>
-
-</body>
-</html>
-
+<?php
+print PrintBodyEnd();
+?>
