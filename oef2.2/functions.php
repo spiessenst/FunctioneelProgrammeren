@@ -58,3 +58,4 @@ function MakeSelect( $fieldname, $sql, $list_fields = [], $optional = true )
 
     print $myselect;
 }
+
