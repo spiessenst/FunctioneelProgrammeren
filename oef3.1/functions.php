@@ -16,6 +16,8 @@ function GetData($sql)
     while ($row = mysqli_fetch_assoc($result))
         $sqlarray[] = $row;
 
+
+
     $conn->close();
 
     return $sqlarray;
@@ -58,35 +60,28 @@ function MakeSelect( $fieldname, $sql, $list_fields = [], $optional = true )
 
     print $myselect;
 
-
 }
 
-function MakeFoto($path){
 
-  $foto = '<div class="form-group row">';
-      $foto .= '<div class="col-sm-10">';
-    $foto .=    '<img src="'.$path.'" display="block" width="100%" height="auto" >';
-   $foto .=  '</div>';
-   $foto .=  '</div>';
-
-return $foto;
-}
 function MakeForm($labels, $values){
 
-    $value = $values[0];
+
     $form =  '<form id="mainform" name="mainform" action="save.php" method="post">';
 
-    for( $i=0 ; $i<count($labels) ; $i++){
+    //toon eventueel alle velden
+    foreach($values as $value){
 
-        //check of de veldnaam een _ bevat geef alles achter de _ als labelnaam
-        if (($pos = strpos($labels[$i]["Field"], "_")) !== FALSE) {
-            $label = substr($labels[$i]["Field"], $pos+1);
+       foreach ($labels as $label){
+
+        //check of de veldnaam een _ bevat. geef alles achter de _ als labelnaam
+        if (($pos = strpos($label["Field"], "_")) !== false) {
+            $labeltext = substr($label["Field"], $pos+1);
         }
         else{
-            $label = $labels[$i]["Field"];
+            $labeltext = $label["Field"];
         }
         // check of het een id readonly field is
-        if($label == "id"){
+        if($labeltext == "id"){
             $class = "form-control-plaintext";
             $readonly = "readonly";
         }else{
@@ -94,27 +89,40 @@ function MakeForm($labels, $values){
             $readonly = "";
         }
         //check of het een int of text is
-        $arr = explode("(", $labels[$i]["Type"], 2);
+        $arr = explode("(", $label["Type"]);
         $type = $arr[0];
+
 
         if($type == "int") $fieldtype = "number";
         else $fieldtype = "text";
 
         //print form
         $form .= '<div class="form-group row">';
-        $form .= '<label for="'.$label.'" class="col-sm-2 col-form-label">'.ucfirst($label).'</label>';
+        $form .= '<label for="'.$labeltext.'" class="col-sm-2 col-form-label">'.ucfirst($labeltext).'</label>';
         $form .=  '<div class="col-sm-10">';
-        $form .= '<input type="'.$fieldtype.'" '.$readonly.' class="'.$class.'"  name="'.$labels[$i]["Field"].'" id="'.$labels[$i]["Field"].'" value="'.$value[$labels[$i]["Field"]].'">';
+        $form .= '<input type="'.$fieldtype.'" '.$readonly.' class="'.$class.'"  name="'.$label["Field"].'" id="'.$label["Field"].'" value="'.$value[$label["Field"]].'">';
+        $form .=  '</div>';
+        $form .=  '</div>';
+
+
+    }
+        //print button
+        $form .= '<div class="form-group row">';
+        $form .=  '<label for="" class="col-sm-2 col-form-label"></label>';
+        $form .= '<div class="col-sm-10">';
+        $form .= '<button type="submit" class="btn btn-primary">Save</button>';
+        $form .=  '</div>';
+        $form .=  '</div>';
+        $form .= '</form>';
+
+        $form .= '<div class="form-group row">';
+        $form .= '<div class="col-sm-10">';
+        $form .=    '<img src="./images/'.$value["img_filename"].'" display="block" width="100%" height="auto" >';
         $form .=  '</div>';
         $form .=  '</div>';
     }
-    $form .= '<div class="form-group row">';
-    $form .=  '<label for="" class="col-sm-2 col-form-label"></label>';
-    $form .= '<div class="col-sm-10">';
-    $form .= '<button type="submit" class="btn btn-primary">Save</button>';
-    $form .=  '</div>';
-    $form .=  '</div>';
-    $form .= '</form>';
+
+
 
     return $form;
     }
