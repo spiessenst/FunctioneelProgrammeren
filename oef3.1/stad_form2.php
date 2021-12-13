@@ -76,8 +76,6 @@ print PrintJumbo("Bewerk Afbeelding" , "");
             </div>
         </div>
 
-
-
     </form>
 
 </div>
