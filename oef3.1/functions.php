@@ -80,6 +80,7 @@ function MakeForm($labels, $values){
         else{
             $labeltext = $label["Field"];
         }
+
         // check of het een id readonly field is
         if($labeltext == "id"){
             $class = "form-control-plaintext";
@@ -88,10 +89,10 @@ function MakeForm($labels, $values){
             $class = "form-control";
             $readonly = "";
         }
+
         //check of het een int of text is
         $arr = explode("(", $label["Type"]);
         $type = $arr[0];
-
 
         if($type == "int") $fieldtype = "number";
         else $fieldtype = "text";
@@ -115,6 +116,8 @@ function MakeForm($labels, $values){
         $form .=  '</div>';
         $form .= '</form>';
 
+
+        //print image
         $form .= '<div class="form-group row">';
         $form .= '<div class="col-sm-10">';
         $form .=    '<img src="./images/'.$value["img_filename"].'" display="block" width="100%" height="auto" >';
