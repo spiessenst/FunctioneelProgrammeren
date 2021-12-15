@@ -8,6 +8,8 @@ require_once "lib/security.php";
 
 PrintHead();
 PrintJumbo( $title = "Bewerk afbeelding", $subtitle = "" );
+
+PrintNavbar();
 ?>
 
 <div class="container">

@@ -8,9 +8,10 @@ require_once "lib/pdo.php";
 require_once "lib/html_functions.php";
 
 PrintHead();
+
 PrintJumbo( $title = "Leuke plekken in Europa" ,
                         $subtitle = "Tips voor citytrips voor vrolijke vakantiegangers!" );
-
+PrintNavbar();
 //var_dump( $_SESSION['last_sql'] );
 ?>
 

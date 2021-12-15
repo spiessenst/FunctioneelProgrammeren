@@ -1,6 +1,13 @@
 <?php
 require_once "pdo.php";
 
+
+function PrintNavbar() {
+
+    $nav = file_get_contents("templates/navbar.html");
+    print $nav;
+}
+
 function PrintHead()
 {
     $head = file_get_contents("templates/head.html");
@@ -44,7 +51,9 @@ function MergeViewWithExtra( $template, $elements )
     {
         $template = str_replace( "@$key@", $element, $template );
     }
+
     return $template;
+
 }
 
 function MakeSelect( $fieldname, $sql, $list_fields = [], $select_value  , $optional = true )
@@ -53,8 +62,6 @@ function MakeSelect( $fieldname, $sql, $list_fields = [], $select_value  , $opti
 
     $myselect = "";
 
-
-
     $myselect .= "<select id=$fieldname name=$fieldname>";
 
     if ( $optional ) $myselect .= "<option></option>";
@@ -62,13 +69,8 @@ function MakeSelect( $fieldname, $sql, $list_fields = [], $select_value  , $opti
     foreach ( $rows as $row )
 
     {
-        if ($row[$list_fields[0]] == $select_value){
-            $myselect .= "<option value='" . $row[$list_fields[0]] . "' selected >" . $row[$list_fields[1]] . "</option>";
-    }
-        else{
-            $myselect .= "<option value='" . $row[$list_fields[0]] . "' >" . $row[$list_fields[1]] . "</option>";
-        }
-
+        if ($row[$list_fields[0]] == $select_value) $myselect .= "<option value='" . $row[$list_fields[0]] . "' selected >" . $row[$list_fields[1]] . "</option>";
+        else $myselect .= "<option value='" . $row[$list_fields[0]] . "' >" . $row[$list_fields[1]] . "</option>";
 
     }
 
