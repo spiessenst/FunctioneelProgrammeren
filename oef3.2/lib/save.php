@@ -11,10 +11,9 @@ function SaveFormData()
     if ( $_SERVER['REQUEST_METHOD'] == "POST" )
     {
 
-        if ( ! key_exists("csrf", $_POST)) die("Missing CSRF");
-        if ( ! hash_equals( $_POST['csrf'], $_SESSION['latest_csrf'] ) ) die("Problem with CSRF");
+        if ( ! hash_equals( $_POST['csrf'], $_SESSION['latest_csrf'] ) ) die();
 
-        $_SESSION['latest_csrf'] = "";
+        unset($_SESSION['latest_csrf']);
 
         $table = $pkey = $update = $insert = $where = $str_keys_values = "";
 
@@ -25,8 +24,8 @@ function SaveFormData()
         $pkey = $_POST['pkey'];
 
         //sanitization
-        $_POST = StripSpaces($_POST);
-        $_POST = ConvertSpecialChars($_POST);
+        $_POST = Sanitisation($_POST);
+
 
         //insert or update?
         if ( $_POST["$pkey"] > 0 ) $update = true;

@@ -94,6 +94,8 @@ function MakeForm($labels, $values){
         $arr = explode("(", $label["Type"]);
         $type = $arr[0];
 
+
+
         if($type == "int") $fieldtype = "number";
         else $fieldtype = "text";
 

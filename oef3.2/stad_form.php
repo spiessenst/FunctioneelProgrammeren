@@ -22,9 +22,9 @@ PrintNavbar();
             $data = GetData( "select * from images where img_id =" . $_GET['img_id'] );
 
 
-            $extra['csrf_token'] = GenerateCSRF( "stad_form.php");
-            $extra['select_land'] = MakeSelect( $fieldname = 'img_lan_id', $sql = "select lan_id, lan_land from land " ,
-            $list_fields = ["lan_id", "lan_land"] , $data[0]["img_lan_id"] );
+            $csrf_token = GenerateCSRF( "stad_form.php");
+            $select_land = MakeSelect( 'img_lan_id',  "select lan_id, lan_land from land " ,
+            ["lan_id", "lan_land"] , $data[0]["img_lan_id"] );
 
 
             //get template (view)
@@ -33,10 +33,9 @@ PrintNavbar();
             //merge (controller)
 
             $output = MergeViewWithData( $template, $data);
-            $output = MergeViewWithExtra($output , $extra  );
+            $output =str_replace("@select_land@" , $select_land ,  $output );
+            $output =str_replace("@csrf_token@" , $csrf_token ,  $output );
             print $output;
-
-
 
         ?>
 

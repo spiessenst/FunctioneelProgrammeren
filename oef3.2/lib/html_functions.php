@@ -48,7 +48,9 @@ function MergeViewWithExtra( $template, $elements )
 {
 
     foreach ( $elements as $key => $element )
+
     {
+
         $template = str_replace( "@$key@", $element, $template );
     }
 

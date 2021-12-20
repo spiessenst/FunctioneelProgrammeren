@@ -18,7 +18,7 @@
 <?php
 
 $steden =	array(
-    "londen" =>  "images/londen.jpg",
+    "londen" =>  "images/london.jpg",
     "parijs" =>  "images/parijs.jpg",
     "berlijn" =>  "images/berlijn.jpg",
 

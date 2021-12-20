@@ -1,20 +1,11 @@
 <?php
-function StripSpaces( array $arr ): array
+function Sanitisation( $arr)
 {
     foreach ( $arr as $key => $value )
     {
-        $arr[$key] = trim($value);
+        $arr[$key] = htmlspecialchars(trim($value) , ENT_QUOTES);
     }
 
     return $arr;
 }
 
-function ConvertSpecialChars( array $arr ): array
-{
-    foreach ( $arr as $key => $value )
-    {
-        $arr[$key] = htmlspecialchars($value, ENT_QUOTES);
-    }
-
-    return $arr;
-}

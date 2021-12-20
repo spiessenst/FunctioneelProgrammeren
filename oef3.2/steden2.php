@@ -20,7 +20,9 @@ PrintNavbar();
 
 <?php
     //get data
-    $data = GetData( "select * from images" );
+    $data = GetData( "select * from images
+inner join  land l on images.img_lan_id = l.lan_id
+" );
 
     //get template
     $template = file_get_contents("templates/column.html");
