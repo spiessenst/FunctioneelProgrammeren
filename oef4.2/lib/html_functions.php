@@ -1,13 +1,4 @@
 <?php
-require_once "pdo.php";
-
-
-function PrintNavbar() {
-
-    $nav = file_get_contents("templates/navbar.html");
-    print $nav;
-}
-
 function PrintHead()
 {
     $head = file_get_contents("templates/head.html");
@@ -22,6 +13,13 @@ function PrintJumbo( $title = "", $subtitle = "" )
     $jumbo = str_replace( "@jumbo_subtitle@", $subtitle, $jumbo );
 
     print $jumbo;
+}
+
+function PrintNavbar( )
+{
+    $navbar = file_get_contents("templates/navbar.html");
+
+    print $navbar;
 }
 
 function MergeViewWithData( $template, $data )
@@ -43,45 +41,33 @@ function MergeViewWithData( $template, $data )
     return $returnvalue;
 }
 
-
-
-
-
-function MergeViewWithExtra( $template, $elements )
+function MergeViewWithExtraElements( $template, $elements )
 {
-
     foreach ( $elements as $key => $element )
-
     {
-
         $template = str_replace( "@$key@", $element, $template );
+    }
+    return $template;
+}
+
+function MergeViewWithErrors( $template, $errors )
+{
+    foreach ( $errors as $key => $error )
+    {
+        $template = str_replace( "@$key@", "<p style='color:red'>$error</p>", $template );
+    }
+    return $template;
+}
+
+function RemoveEmptyErrorTags( $template, $data )
+{
+    foreach ( $data as $row )
+    {
+        foreach( array_keys($row) as $field )  //eerst "img_id", dan "img_title", ...
+        {
+            $template = str_replace( "@$field" . "_error@", "", $template );
+        }
     }
 
     return $template;
-
-}
-
-function MakeSelect( $fieldname, $sql, $list_fields = [], $select_value  , $optional = true )
-{
-    $rows = GetData($sql);
-
-    $myselect = "";
-
-    $myselect .= "<select id=$fieldname name=$fieldname>";
-
-    if ( $optional ) $myselect .= "<option></option>";
-
-    foreach ( $rows as $row )
-
-    {
-        if ($row[$list_fields[0]] == $select_value) $myselect .= "<option value='" . $row[$list_fields[0]] . "' selected >" . $row[$list_fields[1]] . "</option>";
-        else $myselect .= "<option value='" . $row[$list_fields[0]] . "' >" . $row[$list_fields[1]] . "</option>";
-
-    }
-
-    $myselect .= "</select>";
-
-    return $myselect;
-
-
 }
