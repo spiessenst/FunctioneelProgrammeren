@@ -17,6 +17,8 @@ function SaveFormData()
         $_POST = StripSpaces($_POST);
         $_POST = ConvertSpecialChars($_POST);
 
+
+
         $table = $pkey = $update = $insert = $where = $str_keys_values = "";
 
         //get important metadata
@@ -25,11 +27,15 @@ function SaveFormData()
 
         $table = $_POST['table'];
         $pkey = $_POST['pkey'];
-        
 
         //validation
         $sending_form_uri = $_SERVER['HTTP_REFERER'];
         CompareWithDatabase( $table, $pkey );
+        ValidateUsrPassword($_POST['usr_password']);
+        ValidateUsrEmail($_POST['usr_email']);
+        CheckUniqueUsrEmail(($_POST['usr_email']));
+
+
 
         //terugkeren naar afzender als er een fout is
         if ( count($_SESSION['errors']) > 0 ) { header( "Location: " . $sending_form_uri ); exit(); }
@@ -47,24 +53,16 @@ function SaveFormData()
         foreach ( $_POST as $field => $value )
         {
             //skip non-data fields
-            if ( in_array( $field, [ 'table', 'pkey', 'afterinsert', 'afterupdate', 'csrf' ] ) ) continue;
+            if ( in_array( $field, [ 'table', 'pkey', 'afterinsert', 'afterupdate', 'csrf' , 'msgs' ] ) ) continue;
 
-            //handle primary key field and passwordhash
+            //handle primary key field
             if ( $field == $pkey )
             {
                 if ( $update ) $where = " WHERE $pkey = $value ";
                 continue;
             }
 
-            if ( $field == "usr_password" ) {
-                {
-                    $value = password_hash($value, PASSWORD_BCRYPT);
-
-
-                }
-
-            }
-
+            //all other data-fields
             $keys_values[] = " $field = '$value' " ;
         }
 
@@ -79,10 +77,7 @@ function SaveFormData()
         //run SQL
         $result = ExecuteSQL( $sql );
 
-
-
-
-
+        $_SESSION['msgs'] = $_POST['msgs'];
 
         //output if not redirected
         print $sql ;
@@ -94,3 +89,4 @@ function SaveFormData()
         if ( $update AND $_POST["afterupdate"] > "" ) header("Location: ../" . $_POST["afterupdate"] );
     }
 }
+

@@ -109,3 +109,43 @@ function GetFieldType( $definition )
 
     return [ $type, $length, $precision ];
 }
+
+
+function ValidateUsrPassword( $password )
+{
+    if ( strlen($password) < 8 )
+    {
+        $_SESSION['errors']['usr_password_error'] = "Het wachtwoord moet minstens 8 tekens bevatten";
+
+    }
+
+
+}
+
+function ValidateUsrEmail( $email )
+{
+    if ( filter_var( $email, FILTER_VALIDATE_EMAIL ) )
+    {
+
+    }
+    else
+    {
+        $_SESSION['errors']['usr_email_error'] = "Geen geldig e-mailadres!";
+
+    }
+}
+
+function CheckUniqueUsrEmail( $email )
+{
+    $sql = "SELECT * FROM user WHERE usr_email='" . $email . "'";
+    $rows = GetData($sql);
+
+    if (count($rows) > 0)
+    {
+        $_SESSION['errors']['usr_email_error'] = "Er bestaat al een gebruiker met dit e-mailadres";
+
+    }
+
+
+}
+

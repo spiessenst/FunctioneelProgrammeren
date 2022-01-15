@@ -25,13 +25,16 @@ $extra_elements['csrf_token'] = GenerateCSRF();
 
 
 
+
 //get template
 $template = file_get_contents("templates/register.html");
+
+
 
 //merge
 $output = MergeViewWithData( $template, $data );
 $output = MergeViewWithExtraElements( $output, $extra_elements );
-//$output = MergeViewWithErrors( $output, $errors );
+$output = MergeViewWithErrors( $output, $errors );
 $output = RemoveEmptyErrorTags( $output, $data );
 
 

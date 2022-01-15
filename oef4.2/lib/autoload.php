@@ -9,6 +9,17 @@ require_once "sanitize.php";
 require_once "validate.php";
 require_once "security.php";
 
+
+$msgs = "";
+
+if ( key_exists( 'msgs', $_SESSION ))
+{
+    $msgs = $_SESSION['msgs'];
+
+    $_SESSION['msgs'] = null;
+
+}
+
 $errors = [];
 
 if ( key_exists( 'errors', $_SESSION ) AND is_array( $_SESSION['errors']) )
@@ -18,11 +29,3 @@ if ( key_exists( 'errors', $_SESSION ) AND is_array( $_SESSION['errors']) )
 }
 
 
-$msgs = [];
-
-if ( key_exists( 'msgs', $_SESSION ) AND is_array( $_SESSION['msgs']) )
-{
-    $msgs = $_SESSION['msgs'];
-    $_SESSION['errors'] = null;
-
-}
