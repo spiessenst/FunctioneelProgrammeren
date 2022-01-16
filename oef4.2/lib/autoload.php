@@ -10,6 +10,21 @@ require_once "validate.php";
 require_once "security.php";
 
 
+
+
+
+
+
+$old_post = [];
+
+if ( isset($_SESSION['OLD_POST']) AND is_array( $_SESSION['OLD_POST']) )
+{
+    $old_post = $_SESSION['OLD_POST'];
+    $_SESSION['OLD_POST'] = null;
+}
+
+
+
 $msgs = "";
 
 if ( key_exists( 'msgs', $_SESSION ))

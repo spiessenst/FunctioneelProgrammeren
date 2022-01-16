@@ -111,14 +111,18 @@ function GetFieldType( $definition )
 }
 
 
-function ValidateUsrPassword( $password )
+function ValidateUsrPassword( $password , $password2 )
 {
     if ( strlen($password) < 8 )
     {
         $_SESSION['errors']['usr_password_error'] = "Het wachtwoord moet minstens 8 tekens bevatten";
 
     }
+    if ( $password != $password2)
+    {
+        $_SESSION['errors']['usr_password_error'] = "Wachtwoorden zijn niet hetzelfde ";
 
+    }
 
 }
 
@@ -140,7 +144,9 @@ function CheckUniqueUsrEmail( $email )
     $sql = "SELECT * FROM user WHERE usr_email='" . $email . "'";
     $rows = GetData($sql);
 
-    if (count($rows) > 0)
+
+
+    if ($rows[0]['usr_email'] == $email)
     {
         $_SESSION['errors']['usr_email_error'] = "Er bestaat al een gebruiker met dit e-mailadres";
 
@@ -149,3 +155,10 @@ function CheckUniqueUsrEmail( $email )
 
 }
 
+function ValidateEmpty ($post){
+
+        foreach ($post as $field => $value ){
+            if ($value =="")  $_SESSION['errors'][ $field . "_error" ] = "Veld mag niet leeg zijn";
+        }
+
+}

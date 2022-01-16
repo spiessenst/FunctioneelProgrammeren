@@ -31,14 +31,27 @@ function SaveFormData()
         //validation
         $sending_form_uri = $_SERVER['HTTP_REFERER'];
         CompareWithDatabase( $table, $pkey );
-        ValidateUsrPassword($_POST['usr_password']);
-        ValidateUsrEmail($_POST['usr_email']);
-        CheckUniqueUsrEmail(($_POST['usr_email']));
 
 
+        if (  key_exists("usr_password", $_POST)) {
+
+            ValidateUsrPassword($_POST['usr_password'] , $_POST['usr_password2']);
+            $_POST['usr_password'] = password_hash( $_POST['usr_password'], PASSWORD_BCRYPT );
+        }
+
+        if (  key_exists("usr_email", $_POST))  {
+            ValidateUsrEmail($_POST['usr_email']);
+            CheckUniqueUsrEmail(($_POST['usr_email']));
+        }
+
+        ValidateEmpty($_POST);
 
         //terugkeren naar afzender als er een fout is
-        if ( count($_SESSION['errors']) > 0 ) { header( "Location: " . $sending_form_uri ); exit(); }
+        if ( count($_SESSION['errors']) > 0 ) {
+            header( "Location: " . $sending_form_uri );
+            $_SESSION['OLD_POST'] = $_POST;
+            exit();
+        }
 
         //insert or update?
         if ( $_POST["$pkey"] > 0 ) $update = true;
@@ -53,7 +66,7 @@ function SaveFormData()
         foreach ( $_POST as $field => $value )
         {
             //skip non-data fields
-            if ( in_array( $field, [ 'table', 'pkey', 'afterinsert', 'afterupdate', 'csrf' , 'msgs' ] ) ) continue;
+            if ( in_array( $field, [ 'table', 'pkey', 'afterinsert', 'afterupdate', 'csrf' , 'msgs', 'usr_password2' ] ) ) continue;
 
             //handle primary key field
             if ( $field == $pkey )
@@ -61,6 +74,8 @@ function SaveFormData()
                 if ( $update ) $where = " WHERE $pkey = $value ";
                 continue;
             }
+
+
 
             //all other data-fields
             $keys_values[] = " $field = '$value' " ;
@@ -77,12 +92,14 @@ function SaveFormData()
         //run SQL
         $result = ExecuteSQL( $sql );
 
-        $_SESSION['msgs'] = $_POST['msgs'];
+
 
         //output if not redirected
         print $sql ;
         print "<br>";
         print $result->rowCount() . " records affected";
+
+        $_SESSION['msgs'] = $_POST['msgs'];
 
         //redirect after insert or update
         if ( $insert AND $_POST["afterinsert"] > "" ) header("Location: ../" . $_POST["afterinsert"] );
