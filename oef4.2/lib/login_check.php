@@ -3,11 +3,14 @@ require_once "autoload.php";
 
 if ( LoginCheck() )
 {
-    print "INLOGGEN GELUKT";
+
+    header( "Location: ../steden.php" );
+
 }
 else
 {
-    print "HELAAS";
+    unset( $_SESSION['user'] ) ;
+    header( "Location: ../no_access.php" );
 }
 
 function LoginCheck()
@@ -40,7 +43,12 @@ function LoginCheck()
             else $validPass = false;
         }
 
-        if ($validUser == true && $validPass == true) return true;
+        if ($validUser == true && $validPass == true){
+            $_SESSION['user'] = $_POST ;
+            $_SESSION['msgs'] = 'Welkom, ' . ucfirst($rows[0]['usr_voornaam']);
+
+            return true;
+        }
 
 }
 }

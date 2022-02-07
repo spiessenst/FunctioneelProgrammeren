@@ -14,8 +14,7 @@ function SaveFormData()
         $_SESSION['lastest_csrf'] = "";
 
         //sanitization
-        $_POST = StripSpaces($_POST);
-        $_POST = ConvertSpecialChars($_POST);
+
 
 
 

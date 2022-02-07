@@ -2,14 +2,15 @@
 error_reporting( E_ALL );
 ini_set( 'display_errors', 1 );
 
-require_once "lib/autoload.php";
 
 
+$public_access = true;
 require_once "lib/autoload.php";
 
 PrintHead();
 PrintJumbo( $title = "Login", $subtitle = "" );
 PrintNavbar();
+
 ?>
 
 <div class="container">
